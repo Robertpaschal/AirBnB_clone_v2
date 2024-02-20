@@ -3,7 +3,8 @@ from unittest.mock import patch
 from console import HBNBCommand
 from io import StringIO
 from models.base_model import BaseModel
-from models._init_ import storage
+from models.__init__ import storage
+
 
 class TestCreateCommand(unittest.TestCase):
 
@@ -43,7 +44,21 @@ class TestCreateCommand(unittest.TestCase):
         self.assertIsNotNone(obj)
         self.assertEqual(obj.quantity, 5)
 
-    # Add more test cases for mixed parameters, parameter validation, class name validation, etc.
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_create_object_with_updated_format(self, mock_stdout):
+        self.console.onecmd(
+            "create BaseModel name=\"Updated Format\" price=15.99 quantity=3")
+        output = mock_stdout.getvalue().strip()
+        self.assertIn("BaseModel", output)
+        self.assertIn("Updated Format", output)
+        self.assertIn("15.99", output)
+        obj_id = output.split()[3]
+        obj = storage.all().get("Basemodel.{}".format(obj_id))
+        self.assertIsNotNone(obj)
+        self.assertEqual(obj.name, "Updated Format")
+        self.assertEqual(obj.price, 15.99)
+        self.assertEqual(obj.quantity, 3)
 
-if _name_ == '_main_':
+
+if __name__ == '_main_':
     unittest.main()
