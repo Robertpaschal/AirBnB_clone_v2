@@ -5,7 +5,7 @@ import sys
 class TestMySQLScripts(unittest.TestCase):
     def setUp(self):
         self.connection = MySQLdb.connect(
-            host="127.0.0.0.1",
+            host="127.0.0.1",
             user="hbnb_dev",
             passwd="hbnb_dev_pwd",
             db="hbnb_dev_db"
