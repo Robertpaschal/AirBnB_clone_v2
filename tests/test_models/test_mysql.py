@@ -2,6 +2,7 @@ import unittest
 import MySQLdb
 import sys
 
+
 class TestMySQLScripts(unittest.TestCase):
     def setUp(self):
         self.connection = MySQLdb.connect(
@@ -19,12 +20,13 @@ class TestMySQLScripts(unittest.TestCase):
     def test_create_state_command(self):
         initial_count = self.get_states_count()
         final_count = self.get_states_count()
-        self.assertEqual(final_count, initial_count + 1, "New state record was not added")
+        self.assertEqual(
+            final_count, initial_count + 1, "New state record was not added")
 
     def get_states_count(self):
         self.cursor.execute("SELECT COUNT(*) FROM states")
         result = self.cursor.fecthone()
         return result[0]
-    
+
     if __name__ == '__main__':
         unittest.main()
