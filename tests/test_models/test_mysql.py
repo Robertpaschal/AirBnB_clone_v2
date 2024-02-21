@@ -6,9 +6,9 @@ class TestMySQLScripts(unittest.TestCase):
     def setUp(self):
         self.connection = MySQLdb.connect(
             host="127.0.0.0.1",
-            user=sys.argv[1],
-            passwd=sys.argv[2],
-            db=sys.argv[3]
+            user="hbnb_dev",
+            passwd="hbnb_dev_pwd",
+            db="hbnb_dev_db"
         )
         self.cursor = self.connection.cursor()
 
