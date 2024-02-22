@@ -1,7 +1,7 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from models.base_model import Base
+from models.base_model import Base, BaseModel
 from models.city import City
 from models.state import State
 from models.user import User
@@ -34,14 +34,17 @@ class DBStorage:
 
     def all(self, cls=None):
         """Query all objects from the current database session"""
-        objects = {}
+
         classes = [User, State, City, Amenity, Place, Review]
+        objects = {}
 
         if cls:
+            if isinstance(cls, str):
+                cls = eval(cls)
             classes = [cls]
 
         for cls in classes:
-            query = self.__session.query(cls)
+            query = self.__session.query(cls).all()
             for obj in query:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
                 objects[key] = obj
