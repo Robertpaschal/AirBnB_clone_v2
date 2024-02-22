@@ -8,18 +8,24 @@ class BaseModel:
     """A base class for all hbnb models"""
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
+        if 'id' not in kwargs:
+            self.id = str(uuid.uuid4())
+        if 'created_at' not in kwargs:
+            self.created_at = datetime.utcnow()
+        if 'updated_at' not in kwargs:
+            self.updated_at = datetime.utcnow()
+
         if not kwargs:
             from models import storage
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
             storage.new(self)
         else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
+            kwargs['updated_at'] = datetime.strptime(kwargs.get('updated_at',
+                                                                datetime.utcnow().isoformat()),
+                                                                '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs['created_at'] = datetime.strptime(kwargs.get('created_at',
+                                                                datetime.utcnow().isoformat()),
+                                                                '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs.pop('__class__', None)
             self.__dict__.update(kwargs)
 
     def __str__(self):
