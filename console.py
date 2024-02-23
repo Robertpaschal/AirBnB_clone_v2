@@ -145,11 +145,16 @@ class HBNBCommand(cmd.Cmd):
                     continue
             params[key] = value
 
-        if 'state_id' in params:
-            state_id = params['state_id']
-            if not storage.get("State", state_id):
-                print("** state doesn't exist **")
+        if 'city_id' in params:
+            city_id = params['city_id']
+            city_exists = storage._DBStorage__session.query(City).filter_by(id=city_id).first()
+            if not city_exists:
+                print("** city doesn't exist **")
                 return
+
+        if 'state_id' not in params:
+            print("** state_id is required when creating a new place **")
+            return
 
         new_instance = HBNBCommand.classes[class_name](**params)
         storage.new(new_instance)
