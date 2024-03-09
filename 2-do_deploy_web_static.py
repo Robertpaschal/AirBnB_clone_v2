@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 """
-Fabric script based on the fiel 1-pack_weeb_static.py that distributes an
+Fabric script based on the file 1-pack_web_static.py that distributes an
 archive to the web servers
 """
 
 from fabric.api import put, run, env
 from os.path import exists
+from fabric.exceptions import NetworkError
+
 env.hosts = ['54.89.32.102', '18.204.13.27']
 
 
@@ -23,8 +25,8 @@ def do_deploy(archive_path):
         run('rm /tmp/{}'.format(file_n))
         run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
         run('rm -rf {}{}/web_static'.format(path, no_ext))
-        run('rm -rf /data/web_staitc/current')
+        run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
-    except:
+    except NetworkError:
         return False
