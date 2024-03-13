@@ -8,6 +8,7 @@ from fabric.api import env, local, put, run
 from datetime import datetime
 from os.path import exists, isdir
 from fabric.exceptions import NetworkError
+
 env.hosts = ['54.162.232.115', '100.25.212.31']
 
 

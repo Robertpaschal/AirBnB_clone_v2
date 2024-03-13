@@ -10,6 +10,7 @@ from fabric.exceptions import NetworkError
 
 env.hosts = ['54.162.232.115', '100.25.212.31']
 
+
 def do_deploy(archive_path):
     """distributes an archive to the web servers"""
     if exists(archive_path) is False:
@@ -22,11 +23,12 @@ def do_deploy(archive_path):
         run('mkdir -p {}{}/'.format(path, no_ext))
         run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
         run('rm /tmp/{}'.format(file_n))
-        run('rsync -av --delete {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
+        run(
+            'rsync -av --delete {0}{1}/web_static/* {0}{1}/'
+            .format(path, no_ext))
         run('rm -rf {}{}/web_static'.format(path, no_ext))
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
     except NetworkError:
         return False
-    
