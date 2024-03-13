@@ -8,7 +8,7 @@ from fabric.api import put, run, env
 from os.path import exists
 from fabric.exceptions import NetworkError
 
-env.hosts = ['54.89.32.102', '18.204.13.27']
+env.hosts = ['54.162.232.115', '100.25.212.31']
 
 def do_deploy(archive_path):
     """distributes an archive to the web servers"""
@@ -22,10 +22,11 @@ def do_deploy(archive_path):
         run('mkdir -p {}{}/'.format(path, no_ext))
         run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
         run('rm /tmp/{}'.format(file_n))
-        run('rm -rf {0}{1}/web_static/*'.format(path, no_ext))
-        run('shopt -s nullglob && files=(/data/web_static/releases/web_static20240307170818/web_static/*) && if [ ${#files[@]} -gt 0 ]; then mv -f /data/web_static/releases/web_static20240307170818/web_static/* /data/web_static/releases/web_static20240307170818/; fi')
+        run('rsync -av --delete {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
+        run('rm -rf {}{}/web_static'.format(path, no_ext))
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
     except NetworkError:
         return False
+    
