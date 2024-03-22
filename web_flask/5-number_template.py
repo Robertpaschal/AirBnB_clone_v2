@@ -5,7 +5,6 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-
 @app.route('/', strict_slashes=False)
 def hbnb_root():
     """display “Hello HBNB!” """
@@ -17,11 +16,10 @@ def display_hbnb():
     """display “HBNB”"""
     return 'HBNB'
 
-
 @app.route('/c/<text>', strict_slashes=False)
 def display_c_text(text="is_cool"):
-    """
-    Display “C ”, followed by the value of the text variable
+    """ 
+    Display “C ”, followed by the value of the text variable 
     Replace underscore _ symbols with a space """
     return 'C {}'.format(text).replace('_', ' ')
 
@@ -29,8 +27,8 @@ def display_c_text(text="is_cool"):
 @app.route('/python/<text>', strict_slashes=False)
 def display_python_text(text="is_cool"):
     """
-    Display “Python ”, followed by the value of the text variable
-    Replace underscore _ symbols with a space
+    Display “Python ”, followed by the value of the text variable 
+    Replace underscore _ symbols with a space 
     The default value of text is “is cool”
     """
     return 'Python {}'.format(text).replace('_', ' ')
