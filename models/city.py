@@ -11,3 +11,9 @@ class City(BaseModel, Base):
     name = Column(String(128), nullable=False)
     state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
     places = relationship('Place', cascade='all, delete-orphan', backref='cities')
+    state = relationship("State", back_populates="cities_rel")
+    
+    def __str__(self):
+        """ Return a string representation of the City instance """
+        state_name = self.state.name if self.state else "Unknown"
+        return "[City] ({}) {} in the state: {}".format(self.id, self.name, state_name)
