@@ -8,16 +8,6 @@ import os
 app = Flask(__name__)
 
 
-def import_data():
-    """Import data from the 7-dump file """
-    try:
-        import_path = os.path.abspath('7-dump')
-        storage.reload()
-        print("Importing data from {}".format(import_path))
-    except FileNotFoundError:
-        print("Error: 7-dump file not found")
-
-
 @app.route('/states_list', strict_slashes=False)
 def states_list():
     """Display a list of all State objects present in DBstorage"""
@@ -33,5 +23,4 @@ def teardown(exception):
 
 
 if __name__ == "__main__":
-    import_data
     app.run(host='0.0.0.0', port=5000)
