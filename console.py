@@ -147,7 +147,8 @@ class HBNBCommand(cmd.Cmd):
 
         if 'city_id' in params:
             city_id = params['city_id']
-            city_exists = storage._DBStorage__session.query(City).filter_by(id=city_id).first()
+            city_exists = storage._DBStorage__session.query(
+                City).filter_by(id=city_id).first()
             if not city_exists:
                 print("** city doesn't exist **")
                 return
