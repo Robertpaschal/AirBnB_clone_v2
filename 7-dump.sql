@@ -28,6 +28,25 @@ FLUSH PRIVILEGES;
 
 USE hbnb_dev_db;
 
+CREATE TABLE `places` (
+  `id` varchar(60) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `city_id` varchar(60) NOT NULL,
+  `user_id` varchar(60) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `description` varchar(1024),
+  `number_rooms` integer NOT NULL DEFAULT 0,
+  `number_bathrooms` integer NOT NULL DEFAULT 0,
+  `max_guest` integer NOT NULL DEFAULT 0,
+  `price_by_night` integer NOT NULL DEFAULT 0,
+  `latitude` float,
+  `longitude` float,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB;
+
 --
 -- Table structure for table `cities`
 --
